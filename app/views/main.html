@@ -3,3 +3,36 @@
   <p>
     Here's a list of all the CHS facilities running Medhost clinicals.
   </p>
+  <span class="pull-right">Showing {{facilities.length}} facilities</span>
+</div>
+<table class="table table-hover table-striped">
+    <tr>
+        <th>Hosp #</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Hospital Name</th>
+        <th>Reports</th>
+    </tr>
+    <tr ng-repeat="facility in facilities | orderBy:'city':reverse">
+        <td>{{facility.facilityId}}</td>
+        <td>{{facility.city}}</td>
+        <td>{{facility.state}}</td>
+        <td>{{facility.name}}</td>
+        <td>
+            <!-- <div ng-controller="DropdownCtrl">
+                <div class="btn-group" dropdown is-open="status.isopen">
+                    <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+                        Reports <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </div> -->
+        </td>
+    </tr>
+</table>

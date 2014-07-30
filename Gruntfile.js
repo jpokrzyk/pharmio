@@ -74,37 +74,39 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect, options, middlewares) {
+          middleware: function (connect) {
+            var middlewares = [];
             middlewares.push(function(req, res, next) {
+              var endpoints = {
+                "/api/facility": "api/facility.json",
+                "/api/product/": "json-files/product.json"
+              };
+              var match = false;
+              var fileToRead = "";
+
+              Object.keys(endpoints).forEach(function(url) {
+                if (req.url.indexOf(url) == 0) {
+                    match = true;
+                    fileToRead = endpoints[url];
+                }
+              });
+
+                //no match with the url, move along
+                if (match == false) {
+                  return next();
+                }
+
+              setTimeout(function() {res.end(grunt.file.read(fileToRead));}, 5000);
+            });
+            middlewares.push(
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
               ),
               connect.static(appConfig.app)
-            });
-            middlewares.push(function(req, res, next) {
-              var endpoints = {
-                  "/api/facility": "api/facility.json",
-                  "/product/": "json-files/product.json"
-              };
-              var match = false;
-              var fileToRead = "";
-              console.log("I'm in here");
-              Object.keys(endpoints).forEach(function(url) {
-                  if (req.url.indexOf(url) == 0) {
-                      match = true;
-                      fileToRead = endpoints[url];
-                  }
-              });
-
-              //no match with the url, move along
-              if (match == false) {
-                  return next();
-              }
-
-              res.end(grunt.file.read(fileToRead));
-            });
+            );
+            return middlewares;
           }
         }
       },

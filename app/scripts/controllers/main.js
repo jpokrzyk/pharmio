@@ -8,10 +8,6 @@
  * Controller of the pharmioApp
  */
 angular.module('pharmioApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, facility) {
+    $scope.facilities = facility.list();
   });
