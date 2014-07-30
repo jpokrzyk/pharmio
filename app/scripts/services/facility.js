@@ -8,17 +8,23 @@
  * Factory in the pharmioApp.
  */
 angular.module('pharmioApp')
-  .factory('facility', function ($http, $q, $timeout) {
-    
-    var list = function() {
+  .service('facility', function ($http, $q, $timeout) {
+
+    this.listCacheMock = function(field) {
       var deferred = $q.defer();
-      var promise = $http.get('/api/facility').success(function (resp) {
-          deferred.resolve(resp);
-        });
+      deferred.resolve([{"facilityId":64,"hospfLib":"HOSPF064","orderfLib":"ORDERF064","division":2,"state":"TX","hostname":"S00064","location":"Abilene, TX","name":"Abilene Regional Medical Center","connectionString":"jdbc:as400://S00064/ORDERF064;naming=sql;errors=full","city":"Abilene"}]);
       return deferred.promise;
     }
 
-    return {
-      list: list
-    };
+    this.list = function() {
+      return $http.get('/api/facility').then(function(result) {
+        return result.data;
+      });
+    }
+
+    this.listCache = function() {
+      return $http.get('/api/facility', {cache: true }).then(function(result) {
+        return result.data;
+      });
+    }
   });

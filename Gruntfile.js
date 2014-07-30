@@ -96,7 +96,7 @@ module.exports = function (grunt) {
                   return next();
                 }
 
-              setTimeout(function() {res.end(grunt.file.read(fileToRead));}, 5000);
+              setTimeout(function() {res.end(grunt.file.read(fileToRead));}, 1000);
             });
             middlewares.push(
               connect.static('.tmp'),

@@ -8,6 +8,25 @@
  * Controller of the pharmioApp
  */
 angular.module('pharmioApp')
-  .controller('MainCtrl', function ($scope, facility) {
-    $scope.facilities = facility.list();
+  .controller('MainCtrl', function ($scope, facility, $http) {
+
+  	$scope.loading = true;
+  	var _list;
+
+  	var bindList = function bindList(data) {
+  		if ( !angular.equals(_list, data) ) {
+  			$scope.facilities = data;
+  			_list = data;
+  			$scope.loading = false;
+  		}
+  	}
+
+  	facility.listCache()
+  		.then(bindList)
+  		.then(facility.list().then(bindList));
+
+    // facility.listCache().then(function(data) {
+    // 	$scope.facilities = data;
+    // });
+
   });
