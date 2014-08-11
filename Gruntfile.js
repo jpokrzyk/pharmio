@@ -79,6 +79,7 @@ module.exports = function (grunt) {
             middlewares.push(function(req, res, next) {
               var endpoints = {
                 "/api/facility": "api/facility.json",
+                "/api/test.xlsx": "api/test.xlsx",
                 "/api/product/": "json-files/product.json"
               };
               var match = false;
@@ -96,7 +97,12 @@ module.exports = function (grunt) {
                   return next();
                 }
 
-              setTimeout(function() {res.end(grunt.file.read(fileToRead));}, 1000);
+              //Force a delay    
+              if (fileToRead == "api/test.xlsx") {
+               setTimeout(function() {res.end(grunt.file.read(fileToRead));}, 5000);
+              } else {
+                res.end(grunt.file.read(fileToRead));
+              }
             });
             middlewares.push(
               connect.static('.tmp'),

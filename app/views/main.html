@@ -11,29 +11,29 @@
         <th>City</th>
         <th>State</th>
         <th>Hospital Name</th>
-        <th>Reports</th>
+        <th><div style="width:75px">Reports</div></th>
     </tr>
-    <tr ng-repeat="facility in facilities | orderBy:'city':reverse">
-        <td>{{facility.facilityId}}</td>
+    <tr ng-repeat="facility in facilities | orderBy:'city':reverse" 
+        ng-mouseenter="showActions = true" ng-mouseleave="showActions = false">
+        <td><div style="min-height:25px">{{facility.facilityId}}</div></td>
         <td>{{facility.city}}</td>
         <td>{{facility.state}}</td>
         <td>{{facility.name}}</td>
         <td>
-            <!-- <div ng-controller="DropdownCtrl">
-                <div class="btn-group" dropdown is-open="status.isopen">
-                    <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
-                        Reports <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </div>
-            </div> -->
+            <div class="btn-group" ng-show="showActions">
+              <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown">
+                Reports <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="http://localhost/api/test.xlsx">Formulary</a></li>
+                <li><a href="http://localhost/api/test.xlsx">Order Sets</a></li>
+                <li><a href="http://localhost/api/test.xlsx">IV Pack</a></li>
+                <li class="divider"></li>
+                <li><a href="http://localhost/api/test.xlsx">Export All</a></li>
+              </ul>
+            </div>
         </td>
     </tr>
 </table>
+<!-- TODO replace this with a spinner -->
 <div ng-show="loading">I'm loading</div>

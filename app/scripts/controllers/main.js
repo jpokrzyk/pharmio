@@ -29,4 +29,9 @@ angular.module('pharmioApp')
     // 	$scope.facilities = data;
     // });
 
+  // show the report button when hovering on the row
+    $scope.hover = function(facility) {
+      return facility.showReportButton =! facility.showReportButton;
+    };
+
   });
